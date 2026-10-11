@@ -1,0 +1,1326 @@
+/* =========================================
+   MY FINANCE — GLOBAL
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #172033;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f9;
+  color: #172033;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  min-height: 42px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: #172033;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+button:hover {
+  background: #2e3b53;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+input,
+select {
+  color: #172033;
+}
+
+input::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(1.7rem, 4vw, 2.25rem);
+  letter-spacing: -0.7px;
+  line-height: 1.2;
+}
+
+.page-header > div:first-child > p:last-child {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.page-header .eyebrow {
+  margin: 0 0 7px;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.dashboard-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-toolbar #last-updated {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.78rem;
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.summary-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 3%);
+}
+
+.summary-card span {
+  display: block;
+  margin-bottom: 10px;
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.summary-card strong {
+  display: block;
+  color: #172033;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
+
+section {
+  min-width: 0;
+  margin-bottom: 22px;
+  padding: 22px;
+  border: 1px solid #e5eaf1;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 3%);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.section-header h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 1rem;
+}
+
+.section-header p {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+/* =========================================
+   QUICK ENTRY
+========================================= */
+
+#quick-entry-section {
+  padding: 22px;
+}
+
+.quick-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+
+.quick-entry-grid > .quick-entry-card {
+  min-width: 0;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+  box-shadow: none;
+}
+
+.quick-entry-card .section-header {
+  margin-bottom: 16px;
+}
+
+.quick-entry-card .section-header h3 {
+  font-size: 1rem;
+}
+
+.quick-entry-card form > button[type="submit"] {
+  width: 100%;
+  margin-top: 2px;
+}
+
+#expense-status,
+#income-status,
+#transfer-status,
+#edit-status {
+  min-height: 0;
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+#expense-status:empty,
+#income-status:empty,
+#transfer-status:empty,
+#edit-status:empty {
+  display: none;
+}
+
+/* =========================================
+   FORMS
+========================================= */
+
+.form-group {
+  min-width: 0;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #374151;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #d5dce6;
+  border-radius: 9px;
+  background: #ffffff;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: #9ca8ba;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #64748b;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(100 116 139 / 12%);
+}
+
+input[type="date"],
+input[type="month"] {
+  min-height: 44px;
+  max-width: 100%;
+}
+
+/* =========================================
+   ACCOUNTS
+========================================= */
+
+#accounts {
+  display: flex;
+  flex-direction: column;
+}
+
+.account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 2px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.account:last-child {
+  border-bottom: none;
+}
+
+.account-name {
+  color: #172033;
+  font-size: 0.95rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.account-type {
+  margin-top: 3px;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.account-balance {
+  flex-shrink: 0;
+  color: #172033;
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   RECENT TRANSACTIONS
+========================================= */
+
+#transactions {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 2px;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction-info {
+  min-width: 0;
+}
+
+.transaction-info strong {
+  display: block;
+  color: #172033;
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.transaction-info span {
+  display: block;
+  margin-top: 4px;
+  color: #6b7280;
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.transaction-amount {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.transaction-income {
+  color: #15803d;
+}
+
+.transaction-expense {
+  color: #dc2626;
+}
+
+.transaction-neutral {
+  color: #475569;
+}
+
+/* =========================================
+   TRANSACTION HISTORY FILTERS
+========================================= */
+
+.transaction-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 18px;
+}
+
+.transaction-filters .form-group {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   TRANSACTION HISTORY LIST
+========================================= */
+
+#transaction-history {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-history-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.transaction-history-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-history-info {
+  min-width: 0;
+}
+
+.transaction-history-info strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #172033;
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.transaction-history-info span {
+  display: block;
+  color: #6b7280;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.transaction-history-amount {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.transaction-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.transaction-actions button {
+  min-height: 34px;
+  padding: 7px 11px;
+  border: 1px solid #dbe2eb;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.transaction-actions button:hover {
+  background: #f1f5f9;
+  border-color: #b8c3d2;
+}
+
+.transaction-actions button:last-child {
+  color: #b91c1c;
+}
+
+.transaction-actions button:last-child:hover {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+/* =========================================
+   EDIT TRANSACTION
+========================================= */
+
+#edit-section {
+  border-color: #cbd5e1;
+  background: #fbfcfe;
+}
+
+#edit-form {
+  max-width: 650px;
+}
+
+.edit-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#edit-form button[type="submit"] {
+  background: #172033;
+}
+
+#edit-form #cancel-edit {
+  border: 1px solid #d5dce6;
+  background: #ffffff;
+  color: #374151;
+}
+
+#edit-form #cancel-edit:hover {
+  background: #f1f5f9;
+}
+
+/* =========================================
+   BUDGET OVERVIEW
+========================================= */
+
+#budget-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  align-items: start;
+  gap: 15px;
+}
+
+.budget-card {
+  min-width: 0;
+  margin: 0;
+  padding: 17px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+  box-shadow: none;
+}
+
+.budget-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.budget-name {
+  margin: 0;
+  color: #172033;
+  font-size: 0.98rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.budget-period {
+  margin: 5px 0 0;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.budget-percentage {
+  flex-shrink: 0;
+  color: #172033;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.budget-amount {
+  margin: 12px 0;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.budget-progress-track {
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+.budget-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #16a34a;
+  transition: width 0.25s ease;
+}
+
+.budget-progress-fill.over-budget {
+  background: #dc2626;
+}
+
+.budget-remaining {
+  margin: 12px 0 0;
+  color: #15803d;
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+
+.budget-remaining.over-budget {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.budget-card-over {
+  border-color: #fca5a5;
+  background: #fffafa;
+}
+
+.budget-notes {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   REPORTS & ANALYTICS
+========================================= */
+
+#reports-section {
+  margin-top: 0;
+}
+
+.report-period-control {
+  max-width: 280px;
+  margin-bottom: 20px;
+}
+
+/* Monthly summary */
+
+.report-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.report-summary-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+  box-shadow: none;
+}
+
+.report-summary-card span {
+  display: block;
+  margin-bottom: 9px;
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.report-summary-card strong {
+  display: block;
+  color: #172033;
+  font-size: clamp(1rem, 1.9vw, 1.35rem);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-summary-card #report-month-net.report-negative,
+.report-summary-card #report-savings-rate.report-negative {
+  color: #dc2626;
+}
+
+/* Report panels */
+
+.report-card {
+  min-width: 0;
+  margin-top: 17px;
+  padding: 18px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.report-card .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.report-card .section-header h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 1rem;
+}
+
+.report-card .section-header p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+/* Chart legend */
+
+.report-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.report-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #4b5563;
+  font-size: 0.82rem;
+}
+
+.report-legend-marker {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legend-income {
+  background: #16a34a;
+}
+
+.legend-expense {
+  background: #dc2626;
+}
+
+/* Monthly chart
+   Keep explicit dimensions so the bars are visible.
+*/
+
+#monthly-report-chart .monthly-chart {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  align-items: end !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-width: 0;
+  padding-top: 8px;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+#monthly-report-chart .monthly-chart-column {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  min-width: 0 !important;
+  height: 190px !important;
+}
+
+#monthly-report-chart .monthly-chart-bars {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  width: 100% !important;
+  height: 155px !important;
+}
+
+#monthly-report-chart .monthly-chart-bar {
+  display: block !important;
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  min-width: 3px !important;
+  max-width: 45% !important;
+  border-radius: 4px 4px 0 0 !important;
+  transition: height 0.25s ease;
+}
+
+#monthly-report-chart .chart-bar-income {
+  background-color: #16a34a !important;
+}
+
+#monthly-report-chart .chart-bar-expense {
+  background-color: #dc2626 !important;
+}
+
+#monthly-report-chart .monthly-chart-label {
+  display: block !important;
+  margin-top: 10px !important;
+  padding-bottom: 10px;
+  color: #6b7280;
+  font-size: 0.75rem !important;
+  text-align: center !important;
+  white-space: nowrap;
+}
+
+/* Expense breakdown */
+
+#expense-category-report {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.expense-category-row {
+  min-width: 0;
+}
+
+.expense-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.expense-category-name {
+  min-width: 0;
+  color: #374151;
+  font-size: 0.87rem;
+  overflow-wrap: anywhere;
+}
+
+.expense-category-header strong {
+  flex-shrink: 0;
+  color: #172033;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.expense-category-track {
+  width: 100%;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5eaf1;
+}
+
+.expense-category-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #64748b;
+  transition: width 0.25s ease;
+}
+
+.expense-category-percentage {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 0.76rem;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+  main {
+    padding: 22px 18px 40px;
+  }
+
+  .quick-entry-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .report-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .transaction-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  main {
+    padding: 16px 12px 32px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .dashboard-toolbar {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+    margin-bottom: 16px;
+  }
+
+  .summary-card {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .summary-card span {
+    margin-bottom: 7px;
+    font-size: 0.78rem;
+  }
+
+  .summary-card strong {
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+  }
+
+  section {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 1.08rem;
+  }
+
+  .quick-entry-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  #quick-entry-section {
+    padding: 16px;
+  }
+
+  .quick-entry-grid > .quick-entry-card {
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 13px;
+  }
+
+  .form-group label {
+    font-size: 0.84rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    min-height: 46px;
+    font-size: 16px;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  .account {
+    gap: 10px;
+    padding: 13px 0;
+  }
+
+  .account-name {
+    font-size: 0.88rem;
+  }
+
+  .account-balance {
+    max-width: 58%;
+    font-size: 0.86rem;
+  }
+
+  .transaction {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 0;
+  }
+
+  .transaction-info strong {
+    font-size: 0.86rem;
+  }
+
+  .transaction-amount {
+    max-width: 45%;
+    font-size: 0.84rem;
+  }
+
+  .transaction-filters {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .transaction-history-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 9px 12px;
+    padding: 14px 0;
+  }
+
+  .transaction-history-info {
+    min-width: 0;
+  }
+
+  .transaction-history-info strong {
+    font-size: 0.86rem;
+  }
+
+  .transaction-history-info span {
+    font-size: 0.75rem;
+  }
+
+  .transaction-history-amount {
+    max-width: 145px;
+    font-size: 0.83rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .transaction-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .transaction-actions button {
+    min-height: 36px;
+    padding: 7px 12px;
+  }
+
+  #budget-overview {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .budget-card {
+    padding: 15px;
+  }
+
+  .report-period-control {
+    max-width: none;
+  }
+
+  .report-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .report-summary-card {
+    padding: 13px;
+  }
+
+  .report-summary-card span {
+    font-size: 0.76rem;
+  }
+
+  .report-summary-card strong {
+    font-size: clamp(0.9rem, 3.7vw, 1.13rem);
+  }
+
+  .report-card {
+    margin-top: 13px;
+    padding: 14px;
+  }
+
+  #monthly-report-chart .monthly-chart {
+    gap: 3px !important;
+  }
+
+  #monthly-report-chart .monthly-chart-column {
+    height: 175px !important;
+  }
+
+  #monthly-report-chart .monthly-chart-bars {
+    height: 140px !important;
+    gap: 3px !important;
+  }
+
+  #monthly-report-chart .monthly-chart-bar {
+    flex: 0 1 20px !important;
+    width: 20px !important;
+    min-width: 2px !important;
+    max-width: 45% !important;
+  }
+
+  #monthly-report-chart .monthly-chart-label {
+    font-size: 0.68rem !important;
+  }
+
+  #expense-category-report {
+    gap: 17px;
+  }
+
+  .edit-form-actions {
+    flex-direction: column;
+  }
+
+  .edit-form-actions button {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 360px) {
+  main {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  .summary-card {
+    padding: 11px;
+  }
+
+  .summary-card strong {
+    font-size: 0.92rem;
+  }
+
+  section {
+    padding: 13px;
+  }
+
+  #quick-entry-section {
+    padding: 13px;
+  }
+
+  .quick-entry-grid > .quick-entry-card {
+    padding: 12px;
+  }
+
+  .report-card {
+    padding: 11px;
+  }
+
+  .report-summary-card {
+    padding: 10px;
+  }
+
+  .report-summary-card strong {
+    font-size: 0.9rem;
+  }
+
+  #monthly-report-chart .monthly-chart {
+    gap: 1px !important;
+  }
+
+  #monthly-report-chart .monthly-chart-bars {
+    gap: 2px !important;
+  }
+
+  #monthly-report-chart .monthly-chart-bar {
+    flex-basis: 15px !important;
+    width: 15px !important;
+  }
+}
+
+/* =========================================
+   SALARY PAYDAY WORKFLOW
+========================================= */
+
+.salary-workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.salary-panel {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #e5eaf1;
+  border-radius: 12px;
+  background: #fbfcfe;
+}
+
+.salary-panel .section-header {
+  margin-bottom: 14px;
+}
+
+.salary-panel .section-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.salary-help {
+  margin: 8px 0 14px;
+  color: #64748b;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+#salary-status {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+#salary-status:empty {
+  display: none;
+}
+
+#pending-salaries {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.pending-salary-card {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #e5eaf1;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.pending-salary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pending-salary-header > div {
+  min-width: 0;
+}
+
+.pending-salary-header > div strong {
+  display: block;
+  color: #172033;
+  overflow-wrap: anywhere;
+}
+
+.pending-salary-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.pending-salary-amount {
+  flex-shrink: 0;
+  color: #15803d;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.pending-salary-meta {
+  margin: 12px 0;
+  color: #64748b;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.pending-salary-badge {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.salary-empty-state {
+  margin: 0;
+  padding: 16px 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 700px) {
+  .salary-workflow-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .salary-panel {
+    padding: 14px;
+  }
+
+  .pending-salary-header {
+    flex-wrap: wrap;
+  }
+
+  .pending-salary-amount {
+    text-align: left;
+  }
+}
