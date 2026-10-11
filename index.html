@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="theme-color" content="#f8fafc" />
+
+    <title>My Finance</title>
+
+    <link rel="stylesheet" href="style.css?v=salary2" />
+  </head>
+
+  <body>
+    <main>
+      <!-- ===================================
+           HEADER
+      ==================================== -->
+
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">PERSONAL FINANCE</p>
+          <h1>My Finance</h1>
+          <p id="current-month">Loading...</p>
+        </div>
+
+        <div class="dashboard-toolbar">
+          <button type="button" id="refresh-dashboard">Refresh</button>
+
+          <p id="last-updated">Never</p>
+        </div>
+      </header>
+
+      <!-- ===================================
+           FINANCIAL SUMMARY
+      ==================================== -->
+
+      <section class="summary" aria-label="Financial summary">
+        <div class="summary-card">
+          <span>Total Balance</span>
+          <strong id="total-balance">Loading...</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Income</span>
+          <strong id="monthly-income">Loading...</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Expense</span>
+          <strong id="monthly-expense">Loading...</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Net Cash Flow</span>
+          <strong id="monthly-net">Loading...</strong>
+        </div>
+      </section>
+
+      <!-- ===================================
+           QUICK ENTRY
+      ==================================== -->
+
+      <section id="quick-entry-section">
+        <div class="section-header">
+          <div>
+            <h2>Quick Entry</h2>
+            <p>Record your money movements.</p>
+          </div>
+        </div>
+
+        <div class="quick-entry-grid">
+          <!-- ADD EXPENSE -->
+
+          <section class="quick-entry-card">
+            <div class="section-header">
+              <h3>Add Expense</h3>
+            </div>
+
+            <form id="expense-form">
+              <div class="form-group">
+                <label for="expense-amount"> Amount (Rp) </label>
+
+                <input
+                  type="number"
+                  id="expense-amount"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="25000"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="expense-date"> Transaction Date </label>
+
+                <input type="date" id="expense-date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="expense-account"> Account </label>
+
+                <select id="expense-account" required>
+                  <option value="">Select account</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-category"> Category </label>
+
+                <select id="expense-category" required>
+                  <option value="">Select category</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-description"> Description </label>
+
+                <input
+                  type="text"
+                  id="expense-description"
+                  placeholder="Example: Lunch"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button type="submit">Save Expense</button>
+
+              <p id="expense-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <!-- ADD INCOME -->
+
+          <section class="quick-entry-card">
+            <div class="section-header">
+              <h3>Add Income</h3>
+            </div>
+
+            <form id="income-form">
+              <div class="form-group">
+                <label for="income-amount"> Amount (Rp) </label>
+
+                <input
+                  type="number"
+                  id="income-amount"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="3000000"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="income-date"> Transaction Date </label>
+
+                <input type="date" id="income-date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="income-account"> Account </label>
+
+                <select id="income-account" required>
+                  <option value="">Select account</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="income-category"> Income Type </label>
+
+                <select id="income-category" required>
+                  <option value="">Select income type</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="income-description"> Description </label>
+
+                <input
+                  type="text"
+                  id="income-description"
+                  placeholder="Example: October Salary"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button type="submit">Save Income</button>
+
+              <p id="income-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <!-- TRANSFER -->
+
+          <section class="quick-entry-card">
+            <div class="section-header">
+              <h3>Transfer Money</h3>
+            </div>
+
+            <form id="transfer-form">
+              <div class="form-group">
+                <label for="transfer-from"> From </label>
+
+                <select id="transfer-from" required>
+                  <option value="">Select source account</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="transfer-to"> To </label>
+
+                <select id="transfer-to" required>
+                  <option value="">Select destination account</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="transfer-amount"> Amount (Rp) </label>
+
+                <input
+                  type="number"
+                  id="transfer-amount"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="500000"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="transfer-date"> Transaction Date </label>
+
+                <input type="date" id="transfer-date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="transfer-description"> Description </label>
+
+                <input
+                  type="text"
+                  id="transfer-description"
+                  placeholder="Example: Move money to saving"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button type="submit">Transfer</button>
+
+              <p id="transfer-status" role="status" aria-live="polite"></p>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <!-- ===================================
+           ACCOUNTS
+      ==================================== -->
+
+      <section id="accounts-section">
+        <div class="section-header">
+          <h2>Accounts</h2>
+        </div>
+
+        <div id="accounts">Loading...</div>
+      </section>
+
+      <!-- ===================================
+     SALARY PAYDAY WORKFLOW
+==================================== -->
+
+      <section id="salary-workflow-section">
+        <div class="section-header">
+          <div>
+            <h2>Salary Payday</h2>
+            <p>
+              Receive your salary now and distribute it when the new month
+              begins.
+            </p>
+          </div>
+        </div>
+
+        <div class="salary-workflow-grid">
+          <!-- RECEIVE SALARY -->
+
+          <div class="salary-panel">
+            <div class="section-header">
+              <h3>Receive Salary</h3>
+            </div>
+
+            <p class="salary-help">
+              Salary will be recorded in ACC001 only. No distribution happens at
+              this step.
+            </p>
+
+            <form id="salary-form">
+              <div class="form-group">
+                <label for="salary-month"> Month This Salary Will Fund </label>
+                <input type="month" id="salary-month" required />
+              </div>
+
+              <div class="form-group">
+                <label for="salary-received-date"> Date Received </label>
+                <input type="date" id="salary-received-date" required />
+              </div>
+
+              <div class="form-group">
+                <label for="salary-amount"> Actual Salary (Rp) </label>
+                <input
+                  type="number"
+                  id="salary-amount"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="3050000"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="salary-category"> Salary Category </label>
+                <select id="salary-category" required>
+                  <option value="">Select salary category</option>
+                </select>
+                <p id="salary-category-help" class="salary-help" role="status">
+                  Loading eligible salary categories...
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label for="salary-description"> Description </label>
+                <input
+                  type="text"
+                  id="salary-description"
+                  placeholder="Example: November Salary"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button type="submit">Save Salary to ACC001</button>
+
+              <p id="salary-status" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <!-- PENDING SALARIES -->
+
+          <div class="salary-panel">
+            <div class="section-header">
+              <div>
+                <h3>Pending Salary Distribution</h3>
+                <p>Salary received but not yet distributed.</p>
+              </div>
+
+              <button type="button" id="refresh-pending-salaries">
+                Refresh
+              </button>
+            </div>
+
+            <div id="pending-salaries">Loading pending salaries...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================
+           RECENT TRANSACTIONS
+      ==================================== -->
+
+      <section id="recent-transactions-section">
+        <div class="section-header">
+          <h2>Recent Transactions</h2>
+        </div>
+
+        <div id="transactions">Loading...</div>
+      </section>
+
+      <!-- ===================================
+           BUDGET OVERVIEW
+      ==================================== -->
+
+      <section id="budget-section">
+        <div class="section-header">
+          <div>
+            <h2>Budget Overview</h2>
+            <p>Your monthly spending limits.</p>
+          </div>
+        </div>
+
+        <div id="budget-overview">Loading budgets...</div>
+      </section>
+
+      <!-- ===================================
+           REPORTS & ANALYTICS
+      ==================================== -->
+
+      <section id="reports-section">
+        <div class="section-header">
+          <div>
+            <h2>Reports & Analytics</h2>
+            <p>Understand your financial activity.</p>
+          </div>
+        </div>
+
+        <!-- REPORT PERIOD -->
+
+        <div class="form-group report-period-control">
+          <label for="report-month-picker"> Select Report Month </label>
+
+          <input type="month" id="report-month-picker" />
+        </div>
+
+        <!-- MONTHLY SUMMARY -->
+
+        <div class="report-summary-grid">
+          <div class="report-summary-card">
+            <span>Monthly Income</span>
+            <strong id="report-month-income">Loading...</strong>
+          </div>
+
+          <div class="report-summary-card">
+            <span>Monthly Expense</span>
+            <strong id="report-month-expense">Loading...</strong>
+          </div>
+
+          <div class="report-summary-card">
+            <span>Net Cash Flow</span>
+            <strong id="report-month-net">Loading...</strong>
+          </div>
+
+          <div class="report-summary-card">
+            <span>Savings Rate</span>
+            <strong id="report-savings-rate">Loading...</strong>
+          </div>
+        </div>
+
+        <!-- INCOME VS EXPENSE -->
+
+        <div class="report-card">
+          <div class="section-header">
+            <div>
+              <h3>Income vs Expense</h3>
+              <p>Last 6 months</p>
+            </div>
+          </div>
+
+          <div id="monthly-report-chart">Loading reports...</div>
+        </div>
+
+        <!-- EXPENSE BREAKDOWN -->
+
+        <div class="report-card">
+          <div class="section-header">
+            <div>
+              <h3>Expense Breakdown</h3>
+              <p id="expense-breakdown-period"></p>
+            </div>
+          </div>
+
+          <div id="expense-category-report">Loading reports...</div>
+        </div>
+      </section>
+
+      <!-- ===================================
+           TRANSACTION HISTORY
+      ==================================== -->
+
+      <section id="transaction-history-section">
+        <div class="section-header">
+          <div>
+            <h2>Transaction History</h2>
+            <p>Search, filter, edit, or delete transactions.</p>
+          </div>
+        </div>
+
+        <div class="transaction-filters">
+          <div class="form-group">
+            <label for="transaction-search"> Search </label>
+
+            <input
+              type="text"
+              id="transaction-search"
+              placeholder="Search description..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="transaction-type"> Type </label>
+
+            <select id="transaction-type">
+              <option value="ALL">All</option>
+              <option value="INCOME">Income</option>
+              <option value="EXPENSE">Expense</option>
+              <option value="TRANSFER">Transfer</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="transaction-account"> Account </label>
+
+            <select id="transaction-account">
+              <option value="ALL">All Accounts</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="transaction-category"> Category </label>
+
+            <select id="transaction-category">
+              <option value="ALL">All Categories</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="transaction-history">Loading...</div>
+      </section>
+
+      <!-- ===================================
+           EDIT TRANSACTION
+      ==================================== -->
+
+      <section id="edit-section" hidden>
+        <div class="section-header">
+          <div>
+            <h2>Edit Transaction</h2>
+            <p>Update the selected transaction.</p>
+          </div>
+        </div>
+
+        <form id="edit-form">
+          <input type="hidden" id="edit-transaction-id" />
+
+          <div class="form-group">
+            <label for="edit-amount"> Amount (Rp) </label>
+
+            <input
+              type="number"
+              id="edit-amount"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-date"> Transaction Date </label>
+
+            <input type="date" id="edit-date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-account"> Account </label>
+
+            <select id="edit-account" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-category"> Category </label>
+
+            <select id="edit-category" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-description"> Description </label>
+
+            <input type="text" id="edit-description" autocomplete="off" />
+          </div>
+
+          <div class="edit-form-actions">
+            <button type="submit">Save Changes</button>
+
+            <button type="button" id="cancel-edit">Cancel</button>
+          </div>
+
+          <p id="edit-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <!-- =====================================
+         SCRIPTS
+    ====================================== -->
+
+    <script src="api.js?v=salary3"></script>
+    <script src="app.js?v=salary4"></script>
+  </body>
+</html>
