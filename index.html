@@ -8,7 +8,7 @@
 
     <title>My Finance</title>
 
-    <link rel="stylesheet" href="style.css?v=salary2" />
+    <link rel="stylesheet" href="style.css?v=salary3" />
   </head>
 
   <body>
@@ -448,17 +448,34 @@
           <div id="monthly-report-chart">Loading reports...</div>
         </div>
 
-        <!-- EXPENSE BREAKDOWN -->
+        <!-- INCOME & EXPENSE BREAKDOWN -->
 
-        <div class="report-card">
-          <div class="section-header">
-            <div>
-              <h3>Expense Breakdown</h3>
-              <p id="expense-breakdown-period"></p>
+        <div class="report-breakdown-grid">
+          <!-- INCOME BREAKDOWN -->
+
+          <div class="report-card">
+            <div class="section-header">
+              <div>
+                <h3>Income Breakdown</h3>
+                <p id="income-breakdown-period"></p>
+              </div>
             </div>
+
+            <div id="income-category-report">Loading reports...</div>
           </div>
 
-          <div id="expense-category-report">Loading reports...</div>
+          <!-- EXPENSE BREAKDOWN -->
+
+          <div class="report-card">
+            <div class="section-header">
+              <div>
+                <h3>Expense Breakdown</h3>
+                <p id="expense-breakdown-period"></p>
+              </div>
+            </div>
+
+            <div id="expense-category-report">Loading reports...</div>
+          </div>
         </div>
       </section>
 
@@ -584,6 +601,6 @@
     ====================================== -->
 
     <script src="api.js?v=salary3"></script>
-    <script src="app.js?v=salary4"></script>
+    <script src="app.js?v=salary5"></script>
   </body>
 </html>
