@@ -726,6 +726,143 @@ window.displayBudgetOverview = function (budgets) {
 // REPORTS & ANALYTICS
 // -------------------------
 
+// =========================================
+// PIE CHART COLORS
+// =========================================
+
+const INCOME_PIE_COLORS = [
+  "#16a34a",
+  "#0d9488",
+  "#65a30d",
+  "#22c55e",
+  "#0f766e",
+  "#84cc16",
+  "#4ade80",
+  "#14b8a6",
+  "#a3e635",
+  "#059669",
+];
+
+const EXPENSE_PIE_COLORS = [
+  "#dc2626",
+  "#ea580c",
+  "#d97706",
+  "#7c3aed",
+  "#2563eb",
+  "#db2777",
+  "#0891b2",
+  "#9333ea",
+  "#64748b",
+  "#b45309",
+];
+
+// =========================================
+// RENDER CATEGORY PIE CHART
+// =========================================
+
+function renderCategoryPieChart(
+  container,
+  entries,
+  total,
+  colors,
+  emptyMessage,
+) {
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (!entries.length || total <= 0) {
+    const empty = document.createElement("p");
+    empty.className = "category-breakdown-empty";
+    empty.textContent = emptyMessage;
+    container.appendChild(empty);
+    return;
+  }
+
+  const layout = document.createElement("div");
+  layout.className = "category-chart-layout";
+
+  // Pie chart
+  const chartColumn = document.createElement("div");
+
+  const chart = document.createElement("div");
+  chart.className = "category-pie-chart";
+
+  let currentAngle = 0;
+  const gradientParts = [];
+
+  entries.forEach((item, index) => {
+    const startAngle = currentAngle;
+
+    const endAngle =
+      index === entries.length - 1
+        ? 360
+        : startAngle + (item.amount / total) * 360;
+
+    item.color = colors[index % colors.length];
+
+    gradientParts.push(`${item.color} ${startAngle}deg ${endAngle}deg`);
+
+    currentAngle = endAngle;
+  });
+
+  chart.style.background = `conic-gradient(${gradientParts.join(", ")})`;
+
+  chart.setAttribute("role", "img");
+  chart.setAttribute(
+    "aria-label",
+    entries
+      .map((item) => `${item.name}: ${formatCurrency(item.amount)}`)
+      .join(", "),
+  );
+
+  // Total amount
+  const totalLabel = document.createElement("p");
+  totalLabel.className = "category-chart-total";
+  totalLabel.textContent = formatCurrency(total);
+
+  chartColumn.append(chart, totalLabel);
+
+  // Category legend
+  const legend = document.createElement("div");
+  legend.className = "category-breakdown-legend";
+
+  entries.forEach((item) => {
+    const percentage = (item.amount / total) * 100;
+
+    const row = document.createElement("div");
+    row.className = "category-breakdown-item";
+
+    const marker = document.createElement("span");
+    marker.className = "category-breakdown-color";
+    marker.style.setProperty("--category-color", item.color);
+
+    const name = document.createElement("span");
+    name.className = "category-breakdown-name";
+    name.textContent = item.name;
+
+    const details = document.createElement("div");
+    details.className = "category-breakdown-details";
+
+    const amount = document.createElement("span");
+    amount.className = "category-breakdown-amount";
+    amount.textContent = formatCurrency(item.amount);
+
+    const percentageLabel = document.createElement("span");
+    percentageLabel.className = "category-breakdown-percentage";
+    percentageLabel.textContent = `${percentage.toLocaleString("id-ID", {
+      maximumFractionDigits: 1,
+    })}%`;
+
+    details.append(amount, percentageLabel);
+    row.append(marker, name, details);
+    legend.appendChild(row);
+  });
+
+  layout.append(chartColumn, legend);
+  container.appendChild(layout);
+}
+
 window.displayReports = function (transactions, categories, currentMonth) {
   const incomeElement = getElement("report-month-income");
   const expenseElement = getElement("report-month-expense");
@@ -734,6 +871,8 @@ window.displayReports = function (transactions, categories, currentMonth) {
   const chartContainer = getElement("monthly-report-chart");
   const categoryContainer = getElement("expense-category-report");
   const periodElement = getElement("expense-breakdown-period");
+  const incomeCategoryContainer = getElement("income-category-report");
+  const incomePeriodElement = getElement("income-breakdown-period");
 
   if (
     !incomeElement ||
@@ -920,100 +1059,92 @@ window.displayReports = function (transactions, categories, currentMonth) {
 
   chartContainer.appendChild(chart);
 
-  // EXPENSE BREAKDOWN BY CATEGORY
-  categoryContainer.innerHTML = "";
-
-  if (periodElement) {
-    periodElement.textContent = getMonthLabel(currentMonth, {
-      month: "long",
-      year: "numeric",
-    });
-  }
+  // =========================================
+  // INCOME & EXPENSE BREAKDOWN BY CATEGORY
+  // =========================================
 
   const categoryNames = new Map(
-    (categories || []).map((category) => [
-      category.category_id,
-      category.category_name,
+    (Array.isArray(categories) ? categories : []).map((category) => [
+      String(category.category_id),
+      category.category_name || String(category.category_id),
     ]),
   );
 
-  const categoryTotals = new Map();
+  // Build category totals for one transaction type.
+  function buildCategoryBreakdown(transactionType) {
+    const totals = new Map();
 
-  transactions.forEach((transaction) => {
-    if (
-      String(transaction.date || "").slice(0, 7) !== currentMonth ||
-      transaction.type !== "EXPENSE"
-    ) {
-      return;
-    }
+    transactions.forEach((transaction) => {
+      if (
+        String(transaction.date || "").slice(0, 7) !== currentMonth ||
+        transaction.type !== transactionType
+      ) {
+        return;
+      }
 
-    const categoryId = transaction.category_id || "UNCATEGORIZED";
+      const amount = Number(transaction.amount) || 0;
 
-    const amount = Number(transaction.amount) || 0;
+      if (amount <= 0) return;
 
-    categoryTotals.set(
-      categoryId,
-      (categoryTotals.get(categoryId) || 0) + amount,
-    );
-  });
+      const categoryId = String(transaction.category_id || "UNCATEGORIZED");
 
-  const breakdown = [...categoryTotals.entries()]
-    .map(([categoryId, amount]) => ({
-      categoryId,
-      name: categoryNames.get(categoryId) || categoryId,
-      amount,
-    }))
-    .sort((a, b) => b.amount - a.amount);
+      totals.set(categoryId, (totals.get(categoryId) || 0) + amount);
+    });
 
-  const totalCategoryExpense = breakdown.reduce(
+    return [...totals.entries()]
+      .map(([categoryId, amount]) => ({
+        categoryId,
+        name: categoryNames.get(categoryId) || categoryId,
+        amount,
+      }))
+      .sort((a, b) => b.amount - a.amount);
+  }
+
+  // Get monthly category breakdowns.
+  const incomeBreakdown = buildCategoryBreakdown("INCOME");
+  const expenseBreakdown = buildCategoryBreakdown("EXPENSE");
+
+  const totalCategoryIncome = incomeBreakdown.reduce(
     (total, item) => total + item.amount,
     0,
   );
 
-  if (breakdown.length === 0) {
-    categoryContainer.textContent = "No expenses recorded for this month.";
-  } else {
-    breakdown.forEach((item) => {
-      const percentage =
-        totalCategoryExpense > 0
-          ? (item.amount / totalCategoryExpense) * 100
-          : 0;
+  const totalCategoryExpense = expenseBreakdown.reduce(
+    (total, item) => total + item.amount,
+    0,
+  );
 
-      const row = document.createElement("div");
-      row.className = "expense-category-row";
+  // Display selected month on both charts.
+  const breakdownPeriodLabel = getMonthLabel(currentMonth, {
+    month: "long",
+    year: "numeric",
+  });
 
-      const header = document.createElement("div");
-      header.className = "expense-category-header";
-
-      const name = document.createElement("span");
-      name.className = "expense-category-name";
-      name.textContent = item.name;
-
-      const amount = document.createElement("strong");
-      amount.textContent = formatCurrency(item.amount);
-
-      header.append(name, amount);
-
-      const track = document.createElement("div");
-      track.className = "expense-category-track";
-
-      const fill = document.createElement("div");
-      fill.className = "expense-category-fill";
-      fill.style.width = `${percentage}%`;
-
-      track.appendChild(fill);
-
-      const percentageLabel = document.createElement("p");
-      percentageLabel.className = "expense-category-percentage";
-
-      percentageLabel.textContent = `${percentage.toLocaleString("en-US", {
-        maximumFractionDigits: 1,
-      })}% of expenses`;
-
-      row.append(header, track, percentageLabel);
-      categoryContainer.appendChild(row);
-    });
+  if (incomePeriodElement) {
+    incomePeriodElement.textContent = breakdownPeriodLabel;
   }
+
+  if (periodElement) {
+    periodElement.textContent = breakdownPeriodLabel;
+  }
+
+  // Render Income pie chart.
+  renderCategoryPieChart(
+    incomeCategoryContainer,
+    incomeBreakdown,
+    totalCategoryIncome,
+    INCOME_PIE_COLORS,
+    "No income recorded for this month.",
+  );
+
+  // Render Expense pie chart.
+  renderCategoryPieChart(
+    categoryContainer,
+    expenseBreakdown,
+    totalCategoryExpense,
+    EXPENSE_PIE_COLORS,
+    "No expenses recorded for this month.",
+  );
 
   console.log("Reports rendered:", {
     currentMonth,
@@ -1022,7 +1153,8 @@ window.displayReports = function (transactions, categories, currentMonth) {
     monthlyNet,
     savingsRate,
     monthlyData,
-    breakdown,
+    incomeBreakdown,
+    expenseBreakdown,
   });
 };
 
